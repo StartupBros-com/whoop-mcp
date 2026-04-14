@@ -5,6 +5,7 @@ import session from 'express-session';
 import dotenv from 'dotenv';
 import { promises as fs } from 'fs';
 import path from 'path';
+import { execSync } from 'child_process';
 
 // Load .env file explicitly from project root
 const projectRoot = path.resolve(__dirname, '..');
@@ -145,6 +146,14 @@ app.get(
     `);
     
     setTimeout(() => {
+      // Sync tokens to clawdbot
+      const syncScript = path.join(process.env.HOME || '', '.local/bin/sync-ai-tokens');
+      try {
+        execSync(syncScript, { stdio: 'inherit' });
+      } catch {
+        console.log('Note: Token sync to clawdbot skipped (script not found or failed)');
+      }
+
       console.log('\nAuthentication complete! You can now use the WHOOP MCP server.');
       server.close();
       process.exit(0);
