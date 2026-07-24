@@ -16,3 +16,5 @@ xmcp-env.d.ts
 # OS/Editor
 .DS_Store
 *.log
+# Claude Code parallel worktrees
+.claude/worktrees/
