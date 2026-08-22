@@ -1,6 +1,11 @@
 import { z } from 'zod';
 import { type ToolMetadata, type InferSchema } from 'xmcp';
 import { WhoopAPIClient } from '../api/whoop-client';
+import {
+  errorTextResponse,
+  jsonTextResponse,
+  readOnlyAnnotations,
+} from '../shared/tool-support';
 
 // Define the schema for tool parameters
 export const schema = {
@@ -12,12 +17,7 @@ export const schema = {
 export const metadata: ToolMetadata = {
   name: 'get-recent-cycles',
   description: 'Get recent physiological cycles (days) from WHOOP, including strain and heart rate data',
-  annotations: {
-    title: 'Get Recent WHOOP Cycles',
-    readOnlyHint: true,
-    destructiveHint: false,
-    idempotentHint: true,
-  },
+  annotations: readOnlyAnnotations('Get Recent WHOOP Cycles'),
 };
 
 // Tool implementation
@@ -79,24 +79,13 @@ export default async function getRecentCycles({ limit, days }: InferSchema<typeo
       }),
     };
     
-    return {
-      content: [{
-        type: 'text',
-        text: JSON.stringify({
-          summary,
-          cycles: formattedCycles,
-          has_more: !!response.next_token,
-          next_token: response.next_token,
-        }, null, 2),
-      }],
-    };
+    return jsonTextResponse({
+      summary,
+      cycles: formattedCycles,
+      has_more: !!response.next_token,
+      next_token: response.next_token,
+    });
   } catch (error) {
-    return {
-      content: [{
-        type: 'text',
-        text: `Error: ${error instanceof Error ? error.message : 'Unknown error occurred'}`,
-      }],
-      isError: true,
-    };
+    return errorTextResponse(error);
   }
 }

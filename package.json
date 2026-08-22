@@ -24,7 +24,8 @@
     "dev": "xmcp dev",
     "start": "node dist/http.js",
     "auth": "tsx scripts/auth.ts",
-    "refresh-token": "tsx scripts/refresh-token.ts"
+    "refresh-token": "tsx scripts/refresh-token.ts",
+    "test": "tsx --test test/sleep-formatting.test.ts test/tool-layout.test.ts test/tool-support.test.ts"
   },
   "dependencies": {
     "dotenv": "^17.2.1",
