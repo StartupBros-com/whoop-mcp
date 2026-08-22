@@ -1,6 +1,11 @@
 import { z } from 'zod';
 import { type ToolMetadata, type InferSchema } from 'xmcp';
 import { WhoopAPIClient } from '../api/whoop-client';
+import {
+  errorTextResponse,
+  jsonTextResponse,
+  readOnlyAnnotations,
+} from './tool-support';
 
 // Define the schema for tool parameters
 export const schema = {
@@ -11,12 +16,7 @@ export const schema = {
 export const metadata: ToolMetadata = {
   name: 'get-recovery-for-cycle',
   description: 'Get recovery data for a specific cycle from WHOOP, including recovery score, HRV, and resting heart rate',
-  annotations: {
-    title: 'Get WHOOP Recovery Data for Cycle',
-    readOnlyHint: true,
-    destructiveHint: false,
-    idempotentHint: true,
-  },
+  annotations: readOnlyAnnotations('Get WHOOP Recovery Data for Cycle'),
 };
 
 // Tool implementation
@@ -51,20 +51,9 @@ export default async function getRecoveryForCycle({ cycleId }: InferSchema<typeo
       }),
     };
     
-    return {
-      content: [{
-        type: 'text',
-        text: JSON.stringify(formattedResponse, null, 2),
-      }],
-    };
+    return jsonTextResponse(formattedResponse);
   } catch (error) {
-    return {
-      content: [{
-        type: 'text',
-        text: `Error: ${error instanceof Error ? error.message : 'Unknown error occurred'}`,
-      }],
-      isError: true,
-    };
+    return errorTextResponse(error);
   }
 }
 
