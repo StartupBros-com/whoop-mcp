@@ -1,12 +1,12 @@
 import { z } from 'zod';
 import { type ToolMetadata, type InferSchema } from 'xmcp';
 import { WhoopAPIClient } from '../api/whoop-client';
-import { formatSleep } from './sleep-formatting';
+import { formatSleep } from '../shared/sleep-formatting';
 import {
   errorTextResponse,
   jsonTextResponse,
   readOnlyAnnotations,
-} from './tool-support';
+} from '../shared/tool-support';
 
 // Define the schema for tool parameters
 export const schema = {

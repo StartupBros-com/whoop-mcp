@@ -5,7 +5,7 @@ import {
   errorTextResponse,
   jsonTextResponse,
   readOnlyAnnotations,
-} from './tool-support';
+} from '../shared/tool-support';
 
 // Define the schema for tool parameters
 export const schema = {

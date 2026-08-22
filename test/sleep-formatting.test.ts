@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 
 import type { Sleep } from '../src/api/types';
-import { formatSleep } from '../src/tools/sleep-formatting';
+import { formatSleep } from '../src/shared/sleep-formatting';
 
 const sleep: Sleep = {
   id: 'ecfc6a15-4661-442f-a9a4-f160dd7afae8',

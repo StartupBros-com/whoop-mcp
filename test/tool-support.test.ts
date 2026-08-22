@@ -5,7 +5,7 @@ import {
   errorTextResponse,
   jsonTextResponse,
   readOnlyAnnotations,
-} from '../src/tools/tool-support';
+} from '../src/shared/tool-support';
 
 test('builds the existing read-only annotation contract', () => {
   assert.deepEqual(readOnlyAnnotations('Tool title'), {
