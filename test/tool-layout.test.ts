@@ -1,17 +1,21 @@
 import assert from 'node:assert/strict';
 import { readdirSync, readFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, relative } from 'node:path';
 import test from 'node:test';
+
+function typescriptFiles(directory: string): string[] {
+  return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+    const path = join(directory, entry.name);
+    if (entry.isDirectory()) return typescriptFiles(path);
+    return entry.isFile() && entry.name.endsWith('.ts') ? [path] : [];
+  });
+}
 
 test('every xmcp-discovered source file is a tool entrypoint', () => {
   const toolsDirectory = join(process.cwd(), 'src', 'tools');
-  const nonTools = readdirSync(toolsDirectory, { withFileTypes: true })
-    .filter((entry) => entry.isFile() && entry.name.endsWith('.ts'))
-    .filter((entry) => {
-      const source = readFileSync(join(toolsDirectory, entry.name), 'utf8');
-      return !/\bexport\s+default\b/.test(source);
-    })
-    .map((entry) => entry.name);
+  const nonTools = typescriptFiles(toolsDirectory)
+    .filter((path) => !/\bexport\s+default\b/.test(readFileSync(path, 'utf8')))
+    .map((path) => relative(toolsDirectory, path));
 
   assert.deepEqual(
     nonTools,
