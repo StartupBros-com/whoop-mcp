@@ -3,6 +3,25 @@ import type { Sleep, Cycle, Recovery, PaginatedResponse, WhoopError } from './ty
 
 const WHOOP_API_BASE = 'https://api.prod.whoop.com/developer';
 
+type CollectionParams = {
+  limit?: number;
+  start?: string;
+  end?: string;
+  nextToken?: string;
+};
+
+function collectionQuerySuffix(params?: CollectionParams): string {
+  const queryParams = new URLSearchParams();
+
+  if (params?.limit) queryParams.append('limit', params.limit.toString());
+  if (params?.start) queryParams.append('start', params.start);
+  if (params?.end) queryParams.append('end', params.end);
+  if (params?.nextToken) queryParams.append('nextToken', params.nextToken);
+
+  const queryString = queryParams.toString();
+  return queryString ? `?${queryString}` : '';
+}
+
 export class WhoopAPIClient {
   private static instance: WhoopAPIClient;
 
@@ -69,22 +88,9 @@ export class WhoopAPIClient {
     return this.request<Sleep>(`/v2/activity/sleep/${sleepId}`);
   }
 
-  async getSleepCollection(params?: {
-    limit?: number;
-    start?: string;
-    end?: string;
-    nextToken?: string;
-  }): Promise<PaginatedResponse<Sleep>> {
-    const queryParams = new URLSearchParams();
-    
-    if (params?.limit) queryParams.append('limit', params.limit.toString());
-    if (params?.start) queryParams.append('start', params.start);
-    if (params?.end) queryParams.append('end', params.end);
-    if (params?.nextToken) queryParams.append('nextToken', params.nextToken);
-    
-    const queryString = queryParams.toString();
-    const endpoint = `/v2/activity/sleep${queryString ? `?${queryString}` : ''}`;
-    
+  async getSleepCollection(params?: CollectionParams): Promise<PaginatedResponse<Sleep>> {
+    const endpoint = `/v2/activity/sleep${collectionQuerySuffix(params)}`;
+
     return this.request<PaginatedResponse<Sleep>>(endpoint);
   }
 
@@ -93,22 +99,9 @@ export class WhoopAPIClient {
     return this.request<Cycle>(`/v2/cycle/${cycleId}`);
   }
 
-  async getCycleCollection(params?: {
-    limit?: number;
-    start?: string;
-    end?: string;
-    nextToken?: string;
-  }): Promise<PaginatedResponse<Cycle>> {
-    const queryParams = new URLSearchParams();
-    
-    if (params?.limit) queryParams.append('limit', params.limit.toString());
-    if (params?.start) queryParams.append('start', params.start);
-    if (params?.end) queryParams.append('end', params.end);
-    if (params?.nextToken) queryParams.append('nextToken', params.nextToken);
-    
-    const queryString = queryParams.toString();
-    const endpoint = `/v2/cycle${queryString ? `?${queryString}` : ''}`;
-    
+  async getCycleCollection(params?: CollectionParams): Promise<PaginatedResponse<Cycle>> {
+    const endpoint = `/v2/cycle${collectionQuerySuffix(params)}`;
+
     return this.request<PaginatedResponse<Cycle>>(endpoint);
   }
 
