@@ -54,7 +54,7 @@ export class TokenValidator {
     const CLIENT_SECRET = process.env.WHOOP_CLIENT_SECRET;
     
     if (!CLIENT_ID || !CLIENT_SECRET) {
-      console.error(`WHOOP_CLIENT_ID and WHOOP_CLIENT_SECRET must be set in .env file or environment. status: ${CLIENT_ID} ${CLIENT_SECRET}`);
+      console.error('WHOOP_CLIENT_ID and WHOOP_CLIENT_SECRET must be set in .env file or environment.');
       return false;
     }
 
