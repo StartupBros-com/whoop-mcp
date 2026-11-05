@@ -28,7 +28,7 @@
     "test": "tsx --test test/sleep-formatting.test.ts test/tool-layout.test.ts test/tool-support.test.ts"
   },
   "dependencies": {
-    "dotenv": "^17.2.1",
+    "dotenv": "^17.4.2",
     "express": "^5.1.0",
     "express-session": "^1.18.2",
     "passport": "^0.7.0",
