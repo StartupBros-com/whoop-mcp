@@ -24,7 +24,7 @@ importers:
         specifier: ^1.8.0
         version: 1.8.0
       xmcp:
-        specifier: latest
+        specifier: 0.1.7
         version: 0.1.7(@types/node@24.1.0)(swc-loader@0.2.6(@swc/core@1.13.2)(webpack@5.101.0(@swc/core@1.13.2)))(typescript@5.8.3)(zod@3.24.4)
       zod:
         specifier: 3.24.4
