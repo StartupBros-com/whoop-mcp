@@ -17,31 +17,33 @@
     "model-context-protocol"
   ],
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=22.12.0"
   },
   "scripts": {
     "build": "xmcp build",
     "dev": "xmcp dev",
     "start": "node dist/http.js",
+    "smoke": "node scripts/smoke-stdio.mjs",
     "auth": "tsx scripts/auth.ts",
     "refresh-token": "tsx scripts/refresh-token.ts",
     "test": "tsx --test test/sleep-formatting.test.ts test/tool-layout.test.ts test/tool-support.test.ts test/token-validator.test.ts"
   },
   "dependencies": {
+    "@modelcontextprotocol/server": "2.4.0",
     "dotenv": "^17.4.2",
     "express": "^5.3.0",
     "express-session": "^1.19.0",
     "passport": "^0.7.0",
     "passport-oauth2": "^1.8.0",
-    "xmcp": "0.1.7",
-    "zod": "3.24.4"
+    "xmcp": "1.12.1",
+    "zod": "4.6.7"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
     "@types/express-session": "^1.19.0",
     "@types/passport": "^1.0.17",
     "@types/passport-oauth2": "^1.8.0",
-    "swc-loader": "^0.2.7",
+    "@xmcp-dev/compiler": "1.12.0",
     "tsx": "^4.23.15"
   }
 }

@@ -12,7 +12,7 @@ A Model Context Protocol (MCP) server that provides tools for interacting with t
 
 ## Prerequisites
 
-- Node.js 20 or higher
+- Node.js 22.12 or higher
 - A WHOOP account
 - WHOOP API credentials (Client ID and Secret)
 
