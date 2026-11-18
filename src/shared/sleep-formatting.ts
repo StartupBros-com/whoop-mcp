@@ -3,6 +3,10 @@ import type { Sleep } from '../api/types';
 const MILLISECONDS_PER_MINUTE = 1000 * 60;
 const MILLISECONDS_PER_HOUR = MILLISECONDS_PER_MINUTE * 60;
 
+function formatMinutes(milliseconds: number): string {
+  return `${(milliseconds / MILLISECONDS_PER_MINUTE).toFixed(0)} minutes`;
+}
+
 /** Format WHOOP sleep data identically for both sleep lookup tools. */
 export function formatSleep(sleep: Sleep, cycleId?: number) {
   const start = new Date(sleep.start);
@@ -30,26 +34,21 @@ export function formatSleep(sleep: Sleep, cycleId?: number) {
       },
       sleep_stages: sleep.score.stage_summary
         ? {
-            total_in_bed: `${(
-              sleep.score.stage_summary.total_in_bed_time_milli /
-              MILLISECONDS_PER_MINUTE
-            ).toFixed(0)} minutes`,
-            awake: `${(
-              sleep.score.stage_summary.total_awake_time_milli /
-              MILLISECONDS_PER_MINUTE
-            ).toFixed(0)} minutes`,
-            light_sleep: `${(
-              sleep.score.stage_summary.total_light_sleep_time_milli /
-              MILLISECONDS_PER_MINUTE
-            ).toFixed(0)} minutes`,
-            deep_sleep: `${(
-              sleep.score.stage_summary.total_slow_wave_sleep_time_milli /
-              MILLISECONDS_PER_MINUTE
-            ).toFixed(0)} minutes`,
-            rem_sleep: `${(
-              sleep.score.stage_summary.total_rem_sleep_time_milli /
-              MILLISECONDS_PER_MINUTE
-            ).toFixed(0)} minutes`,
+            total_in_bed: formatMinutes(
+              sleep.score.stage_summary.total_in_bed_time_milli,
+            ),
+            awake: formatMinutes(
+              sleep.score.stage_summary.total_awake_time_milli,
+            ),
+            light_sleep: formatMinutes(
+              sleep.score.stage_summary.total_light_sleep_time_milli,
+            ),
+            deep_sleep: formatMinutes(
+              sleep.score.stage_summary.total_slow_wave_sleep_time_milli,
+            ),
+            rem_sleep: formatMinutes(
+              sleep.score.stage_summary.total_rem_sleep_time_milli,
+            ),
             sleep_cycles: sleep.score.stage_summary.sleep_cycle_count,
             disturbances: sleep.score.stage_summary.disturbance_count,
           }
@@ -59,18 +58,15 @@ export function formatSleep(sleep: Sleep, cycleId?: number) {
             baseline: `${(
               sleep.score.sleep_needed.baseline_milli / MILLISECONDS_PER_HOUR
             ).toFixed(1)} hours`,
-            debt_adjustment: `${(
-              sleep.score.sleep_needed.need_from_sleep_debt_milli /
-              MILLISECONDS_PER_MINUTE
-            ).toFixed(0)} minutes`,
-            strain_adjustment: `${(
-              sleep.score.sleep_needed.need_from_recent_strain_milli /
-              MILLISECONDS_PER_MINUTE
-            ).toFixed(0)} minutes`,
-            nap_adjustment: `${(
-              sleep.score.sleep_needed.need_from_recent_nap_milli /
-              MILLISECONDS_PER_MINUTE
-            ).toFixed(0)} minutes`,
+            debt_adjustment: formatMinutes(
+              sleep.score.sleep_needed.need_from_sleep_debt_milli,
+            ),
+            strain_adjustment: formatMinutes(
+              sleep.score.sleep_needed.need_from_recent_strain_milli,
+            ),
+            nap_adjustment: formatMinutes(
+              sleep.score.sleep_needed.need_from_recent_nap_milli,
+            ),
           }
         : undefined,
     }),
