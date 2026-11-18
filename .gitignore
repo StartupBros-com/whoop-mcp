@@ -4,6 +4,7 @@ node_modules/
 dist
 .xmcp
 xmcp-env.d.ts
+.smoke/
 
 # Environment
 .env

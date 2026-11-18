@@ -1,5 +1,10 @@
+import type { CallToolResult } from '@modelcontextprotocol/server';
+import type { ToolMetadata } from 'xmcp';
+
 /** Build the shared non-mutating annotation contract for WHOOP read tools. */
-export function readOnlyAnnotations(title: string) {
+export function readOnlyAnnotations(
+  title: string,
+): NonNullable<ToolMetadata['annotations']> {
   return {
     title,
     readOnlyHint: true,
@@ -9,7 +14,7 @@ export function readOnlyAnnotations(title: string) {
 }
 
 /** Wrap a JSON-serializable object in the MCP text response shape. */
-export function jsonTextResponse(value: object) {
+export function jsonTextResponse(value: object): CallToolResult {
   return {
     content: [
       {
@@ -21,7 +26,7 @@ export function jsonTextResponse(value: object) {
 }
 
 /** Preserve the tools' existing error response wording and fallback. */
-export function errorTextResponse(error: unknown) {
+export function errorTextResponse(error: unknown): CallToolResult {
   return {
     content: [
       {

@@ -10,8 +10,8 @@ import {
 
 // Define the schema for tool parameters
 export const schema = {
-  sleepId: z.string().uuid({
-    message: 'Sleep ID must be a valid UUID format (e.g., ecfc6a15-4661-442f-a9a4-f160dd7afae8)'
+  sleepId: z.uuid({
+    error: 'Sleep ID must be a valid UUID format (e.g., ecfc6a15-4661-442f-a9a4-f160dd7afae8)'
   }).describe('The UUID of the sleep activity to retrieve'),
 };
 
