@@ -43,7 +43,7 @@
     "@types/express-session": "^1.19.0",
     "@types/passport": "^1.0.17",
     "@types/passport-oauth2": "^1.8.0",
-    "@xmcp-dev/compiler": "1.12.0",
+    "@xmcp-dev/compiler": "1.13.0",
     "tsx": "^4.23.15"
   }
 }
