@@ -1,6 +1,6 @@
-import { z } from 'zod';
 import { type ToolMetadata, type InferSchema } from 'xmcp';
 import { WhoopAPIClient } from '../api/whoop-client';
+import { cycleIdSchema } from '../shared/cycle-id';
 import {
   errorTextResponse,
   jsonTextResponse,
@@ -9,7 +9,7 @@ import {
 
 // Define the schema for tool parameters
 export const schema = {
-  cycleId: z.number().int().positive().describe('The ID of the cycle to retrieve recovery data for'),
+  cycleId: cycleIdSchema.describe('The ID of the cycle to retrieve recovery data for'),
 };
 
 // Define tool metadata
