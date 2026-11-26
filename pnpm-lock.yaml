@@ -27,8 +27,8 @@ importers:
         specifier: ^1.8.0
         version: 1.8.0
       xmcp:
-        specifier: 1.12.1
-        version: 1.12.1(@modelcontextprotocol/server@2.4.0)(zod@4.6.7)
+        specifier: 1.13.0
+        version: 1.13.0(@modelcontextprotocol/server@2.4.0)(zod@4.6.7)
       zod:
         specifier: 4.6.7
         version: 4.6.7
@@ -47,7 +47,7 @@ importers:
         version: 1.8.0
       '@xmcp-dev/compiler':
         specifier: 1.12.0
-        version: 1.12.0(postcss@8.5.33)(xmcp@1.12.1(@modelcontextprotocol/server@2.4.0)(zod@4.6.7))(zod@4.6.7)
+        version: 1.12.0(postcss@8.5.33)(xmcp@1.13.0(@modelcontextprotocol/server@2.4.0)(zod@4.6.7))(zod@4.6.7)
       tsx:
         specifier: ^4.23.15
         version: 4.23.15
@@ -998,8 +998,8 @@ packages:
   wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
 
-  xmcp@1.12.1:
-    resolution: {integrity: sha512-6oUWYoQ0lrwUZwxNbW80X3xWTW3JOVk2jn8tmryyewElVwJJ7eB7gspENTC3JmWG33BvdvPXUercC6AwTyYdBg==}
+  xmcp@1.13.0:
+    resolution: {integrity: sha512-+jP2FoxtmISA+50TeIBI5fOqiuzv8KafR2AGgyAB8zf5KsH8KEjfsv344h563L4+DZ3+q5+trYtoJd+OG5n28g==}
     engines: {node: '>=22.12'}
     hasBin: true
     peerDependencies:
@@ -1408,13 +1408,13 @@ snapshots:
       '@types/http-errors': 2.0.5
       '@types/node': 24.1.0
 
-  '@xmcp-dev/compiler@1.12.0(postcss@8.5.33)(xmcp@1.12.1(@modelcontextprotocol/server@2.4.0)(zod@4.6.7))(zod@4.6.7)':
+  '@xmcp-dev/compiler@1.12.0(postcss@8.5.33)(xmcp@1.13.0(@modelcontextprotocol/server@2.4.0)(zod@4.6.7))(zod@4.6.7)':
     dependencies:
       '@rspack/core': 2.3.3
       postcss-loader: 8.2.1(@rspack/core@2.3.3)(postcss@8.5.33)(typescript@5.9.3)
       ts-checker-rspack-plugin: 1.8.0(@rspack/core@2.3.3)(typescript@5.9.3)
       typescript: 5.9.3
-      xmcp: 1.12.1(@modelcontextprotocol/server@2.4.0)(zod@4.6.7)
+      xmcp: 1.13.0(@modelcontextprotocol/server@2.4.0)(zod@4.6.7)
       zod: 4.6.7
     transitivePeerDependencies:
       - '@module-federation/runtime-tools'
@@ -1942,7 +1942,7 @@ snapshots:
 
   wrappy@1.0.2: {}
 
-  xmcp@1.12.1(@modelcontextprotocol/server@2.4.0)(zod@4.6.7):
+  xmcp@1.13.0(@modelcontextprotocol/server@2.4.0)(zod@4.6.7):
     dependencies:
       zod: 4.6.7
     optionalDependencies:

@@ -35,7 +35,7 @@
     "express-session": "^1.19.0",
     "passport": "^0.7.0",
     "passport-oauth2": "^1.8.0",
-    "xmcp": "1.12.1",
+    "xmcp": "1.13.0",
     "zod": "4.6.7"
   },
   "devDependencies": {
