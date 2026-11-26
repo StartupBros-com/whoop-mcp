@@ -72,6 +72,103 @@ test('formats the shared sleep payload without changing fields or units', () => 
   });
 });
 
+const minuteCases: [number, string][] = [
+  [0, '0 minutes'],
+  [-0, '0 minutes'],
+  [29_999, '0 minutes'],
+  [30_000, '1 minutes'],
+  [30_001, '1 minutes'],
+  [-29_999, '-0 minutes'],
+  [-30_000, '-1 minutes'],
+  [89_999, '1 minutes'],
+  [90_000, '2 minutes'],
+  [-90_000, '-2 minutes'],
+  [NaN, 'NaN minutes'],
+  [Infinity, 'Infinity minutes'],
+  [-Infinity, '-Infinity minutes'],
+];
+
+for (const [milliseconds, expected] of minuteCases) {
+  test(`preserves whole-minute formatting for ${Object.is(milliseconds, -0) ? '-0' : milliseconds}`, () => {
+    const input: Sleep = {
+      ...sleep,
+      score: {
+        ...sleep.score!,
+        stage_summary: {
+          ...sleep.score!.stage_summary,
+          total_in_bed_time_milli: milliseconds,
+          total_awake_time_milli: milliseconds,
+          total_light_sleep_time_milli: milliseconds,
+          total_slow_wave_sleep_time_milli: milliseconds,
+          total_rem_sleep_time_milli: milliseconds,
+        },
+        sleep_needed: {
+          ...sleep.score!.sleep_needed,
+          need_from_sleep_debt_milli: milliseconds,
+          need_from_recent_strain_milli: milliseconds,
+          need_from_recent_nap_milli: milliseconds,
+        },
+      },
+    };
+    const result = formatSleep(input);
+
+    assert.deepEqual(result.sleep_stages, {
+      total_in_bed: expected,
+      awake: expected,
+      light_sleep: expected,
+      deep_sleep: expected,
+      rem_sleep: expected,
+      sleep_cycles: 5,
+      disturbances: 7,
+    });
+    assert.deepEqual(result.sleep_needed, {
+      baseline: '8.0 hours',
+      debt_adjustment: expected,
+      strain_adjustment: expected,
+      nap_adjustment: expected,
+    });
+    assert.equal(result.duration_hours, '8.50');
+  });
+}
+
+test('keeps each fractional stage and adjustment mapped to its own field', () => {
+  const result = formatSleep({
+    ...sleep,
+    score: {
+      ...sleep.score!,
+      stage_summary: {
+        ...sleep.score!.stage_summary,
+        total_in_bed_time_milli: 29_999,
+        total_awake_time_milli: 30_000,
+        total_light_sleep_time_milli: 90_000,
+        total_slow_wave_sleep_time_milli: 150_000,
+        total_rem_sleep_time_milli: 210_000,
+      },
+      sleep_needed: {
+        baseline_milli: 28_800_000,
+        need_from_sleep_debt_milli: -29_999,
+        need_from_recent_strain_milli: -30_000,
+        need_from_recent_nap_milli: -90_000,
+      },
+    },
+  });
+  assert.deepEqual(result.sleep_stages, {
+    total_in_bed: '0 minutes',
+    awake: '1 minutes',
+    light_sleep: '2 minutes',
+    deep_sleep: '3 minutes',
+    rem_sleep: '4 minutes',
+    sleep_cycles: 5,
+    disturbances: 7,
+  });
+  assert.deepEqual(result.sleep_needed, {
+    baseline: '8.0 hours',
+    debt_adjustment: '-0 minutes',
+    strain_adjustment: '-1 minutes',
+    nap_adjustment: '-2 minutes',
+  });
+});
+
 test('adds cycle_id without changing the shared sleep fields', () => {
   const { cycle_id: cycleId, ...sharedFields } = formatSleep(sleep, 1234);
 
